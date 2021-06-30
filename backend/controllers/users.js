@@ -3,7 +3,7 @@ import userModel from "../models/user.model.js";
 
 const router = express.Router();
 
-export const getUser = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     const users = await userModel.find();
     res.status(200).json(users);
@@ -23,6 +23,17 @@ export const createUser = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(409).json({ message: error.message });
+  }
+};
+
+export const getUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await userModel.findById(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 
